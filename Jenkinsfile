@@ -6,6 +6,13 @@ pipeline {
         timeout(time: 10, unit: 'SECONDS')
         disableConcurrentBuilds() 
     }
+    parameters { 
+        string (name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?') 
+        text (name: 'MESSAGE', defaultValue: 'Hello', description: 'What should I say?')
+        booleanparam(name: 'TEST', defaultValue: true, description: 'This is a test')
+        choice(name: 'CHOICE', choices: ['Choice 1', 'Choice 2', 'Choice 3'], description: 'This is a choice parameter')
+        password(name: 'PASSWORD', defaultValue: 'password', description: 'This is a password') 
+    }
     stages {
         stage('Build') {// Timeout counter starts AFTER agent is allocated
             steps {
@@ -22,6 +29,16 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'echo This is Deploy'
+            }
+        }
+        stage('print params') {
+            steps {
+                echo "Hello ${params.PERSON}"
+                echo "Biography: ${params.MESSAGE}"
+                echo "Toggle: ${params.TEST}"
+                echo "Choice: ${params.CHOICE}"
+
+                echo "Password: ${params.PASSWORD}"
             }
         }
     }
