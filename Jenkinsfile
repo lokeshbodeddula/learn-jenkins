@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'AGENT-1'
+    }
     stages {
         stage('Build') {// Timeout counter starts AFTER agent is allocated
             steps {
